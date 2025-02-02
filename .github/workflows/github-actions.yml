@@ -10,7 +10,7 @@ env:
   SNS_TOPIC: ${{ secrets.SNS_TOPIC }}
   SQS_QUEUE: ${{ secrets.SQS_QUEUE }}
   LAMBDA_NAME: ${{ secrets.LAMBDA_NAME }}
-  AWS_REGION: ${{ secrets.REGION }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
   STACK_NAME: ${{ secrets.STACK_NAME }}
 
 jobs:
