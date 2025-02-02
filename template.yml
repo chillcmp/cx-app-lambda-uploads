@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Uploads Notification Function
+
+Parameters:
+  S3BucketName:
+    Type: String
+    Description: Name of the existing S3 bucket for image uploads
+  SNSTopicName:
+    Type: String
+    Description: Name of the existing SNS topic
+  SQSQueueName:
+    Type: String
+    Description: Name of the existing SQS queue
+
+Resources:
+  UploadsNotificationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambda.handler.lambda_handler
+      Runtime: python3.9
+      MemorySize: 128
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - SQSPollerPolicy:
+            QueueName: !Ref SQSQueueName
+        - SNSPublishMessagePolicy:
+            TopicName: !Ref SNSTopicName
+      AutoPublishAlias: live
+      DeploymentPreference:
+        Type: AllAtOnce
+
+Outputs:
+  UploadsNotificationFunctionArn:
+    Value: !GetAtt UploadsNotificationFunction.Arn
+    Description: "ARN of the Lambda function"
