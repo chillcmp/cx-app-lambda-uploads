@@ -19,6 +19,23 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Check if Stack Exists
+        id: check-stack
+        run: |
+          if aws cloudformation describe-stacks --stack-name ${{ secrets.STACK_NAME }} 2>/dev/null; then
+            echo "STACK_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "STACK_EXISTS=false" >> $GITHUB_ENV
+          fi
+
+      - name: Delete Existing Stack (if exists)
+        if: env.STACK_EXISTS == 'true'
+        run: |
+          aws cloudformation delete-stack --stack-name ${{ secrets.STACK_NAME }}
+          echo "Waiting for stack deletion..."
+          aws cloudformation wait stack-delete-complete --stack-name ${{ secrets.STACK_NAME }}
+          echo "Stack deleted successfully."
+
       - name: Deploy CloudFormation
         run: |
           aws cloudformation deploy --template-file template.yml --stack-name ${{ secrets.STACK_NAME }} \
