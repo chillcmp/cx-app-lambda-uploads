@@ -5,14 +5,6 @@ on:
     branches:
       - main
 
-env:
-  S3_BUCKET: ${{ secrets.S3_BUCKET }}
-  SNS_TOPIC: ${{ secrets.SNS_TOPIC }}
-  SQS_QUEUE: ${{ secrets.SQS_QUEUE }}
-  LAMBDA_NAME: ${{ secrets.LAMBDA_NAME }}
-  AWS_REGION: ${{ secrets.AWS_REGION }}
-  STACK_NAME: ${{ secrets.STACK_NAME }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,14 +17,14 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: $AWS_REGION
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy CloudFormation
         run: |
-          aws cloudformation deploy --template-file template.yaml --stack-name $STACK_NAME \
+          aws cloudformation deploy --template-file template.yaml --stack-name ${{ secrets.STACK_NAME }} \
             --parameter-overrides \
-              S3BucketName=$S3_BUCKET \
-              SNSTopicName=$SNS_TOPIC \
-              SQSQueueName=$SQS_QUEUE \
-              LambdaFunctionName=$LAMBDA_NAME \
+              S3BucketName=${{ secrets.S3_BUCKET }} \
+              SNSTopicName=${{ secrets.SNS_TOPIC }} \
+              SQSQueueName=${{ secrets.SQS_QUEUE }} \
+              LambdaFunctionName=${{ secrets.LAMBDA_NAME }} \
             --capabilities CAPABILITY_IAM
