@@ -24,6 +24,8 @@ Resources:
       Timeout: 10
       Policies:
         - AWSLambdaBasicExecutionRole
+        - AWSCodeDeployFullAccess
+        - AWSLambdaRole
         - SQSPollerPolicy:
             QueueName: !Ref SQSQueueName
         - SNSPublishMessagePolicy:
