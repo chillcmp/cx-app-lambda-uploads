@@ -19,6 +19,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Package Lambda
+        run: |
+          aws cloudformation package \
+            --template-file template.yml \
+            --s3-bucket ${{ secrets.S3_BUCKET }} \
+            --output-template-file packaged-template.yml
+
       - name: Check if Stack Exists
         id: check-stack
         run: |
@@ -38,7 +45,7 @@ jobs:
 
       - name: Deploy CloudFormation
         run: |
-          aws cloudformation deploy --template-file template.yml --stack-name ${{ secrets.STACK_NAME }} \
+          aws cloudformation deploy --template-file packaged-template.yml --stack-name ${{ secrets.STACK_NAME }} \
             --parameter-overrides \
               S3BucketName=${{ secrets.S3_BUCKET }} \
               SNSTopicName=${{ secrets.SNS_TOPIC }} \
