@@ -24,6 +24,7 @@ def lambda_handler(event, context):
     messages = []
 
     for record in event["Records"]:
+        print(f"Start handling record: {record}")
         body = record["body"]
 
         try:
