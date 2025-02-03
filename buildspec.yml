@@ -12,7 +12,7 @@ phases:
       # - echo "Running tests..."
       - echo "Building artifact..."
       - sam build
-      - sam package --s3-bucket <your-s3-bucket> --output-template-file output-template.yml
+      - sam package --s3-bucket ${{ secrets.S3_BUCKET }} --output-template-file output-template.yml
 
 artifacts:
   files:
