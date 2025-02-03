@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
