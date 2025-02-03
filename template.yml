@@ -12,6 +12,9 @@ Parameters:
   SQSQueueName:
     Type: String
     Description: Name of the existing SQS queue
+  LambdaFunctionName:
+    Type: String
+    Description: Name of the Lambda function
 
 Resources:
   UploadsNotificationFunction:
