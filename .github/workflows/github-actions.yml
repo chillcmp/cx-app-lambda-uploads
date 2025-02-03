@@ -55,4 +55,5 @@ jobs:
               SNSTopicName=${{ secrets.SNS_TOPIC }} \
               SQSQueueName=${{ secrets.SQS_QUEUE }} \
               LambdaFunctionName=${{ secrets.LAMBDA_NAME }} \
-            --capabilities CAPABILITY_IAM
+            --capabilities CAPABILITY_IAM \
+            --debug
