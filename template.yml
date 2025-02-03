@@ -26,6 +26,7 @@ Resources:
         - AWSLambdaBasicExecutionRole
         - AWSCodeDeployFullAccess
         - AWSLambdaRole
+        - LambdaCustomPolicy
         - SQSPollerPolicy:
             QueueName: !Ref SQSQueueName
         - SNSPublishMessagePolicy:
