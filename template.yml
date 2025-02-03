@@ -20,7 +20,7 @@ Resources:
   UploadsNotificationFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: lambda.handler.lambda_handler
+      Handler: handler.lambda_handler
       CodeUri: ./lambda/
       Runtime: python3.9
       MemorySize: 128
